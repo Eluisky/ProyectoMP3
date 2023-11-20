@@ -10,6 +10,7 @@ module com.example.proyectomp3 {
     requires org.kordamp.bootstrapfx.core;
     requires eu.hansolo.tilesfx;
     requires com.almasb.fxgl.all;
+    requires jaudiotagger;
 
     opens com.example.proyectomp3 to javafx.fxml;
     exports com.example.proyectomp3;
