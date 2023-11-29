@@ -11,6 +11,7 @@ module com.example.proyectomp3 {
     requires eu.hansolo.tilesfx;
     requires com.almasb.fxgl.all;
     requires jaudiotagger;
+    requires java.desktop;
 
     opens com.example.proyectomp3 to javafx.fxml;
     exports com.example.proyectomp3;

@@ -1,23 +1,68 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import de.jensd.fx.glyphs.fontawesome.*?>
+<?import javafx.geometry.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.image.*?>
 <?import javafx.scene.layout.*?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: #000000;" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.proyectomp3.Controlador">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: #000000;" xmlns="http://javafx.com/javafx/11.0.14-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.proyectomp3.Controlador">
    <bottom>
-      <VBox prefHeight="86.0" prefWidth="600.0" BorderPane.alignment="CENTER">
+      <VBox alignment="CENTER" prefHeight="86.0" prefWidth="600.0" BorderPane.alignment="CENTER">
          <children>
-            <Pane prefHeight="38.0" prefWidth="600.0">
+            <HBox alignment="CENTER" prefHeight="17.0" prefWidth="600.0">
                <children>
-                  <ProgressBar layoutX="39.0" layoutY="10.0" prefHeight="18.0" prefWidth="520.0" progress="0.0" />
+                  <Button mnemonicParsing="false" style="-fx-background-color: transparent;">
+                     <graphic>
+                        <FontAwesomeIconView fill="WHITE" glyphName="ROTATE_LEFT" />
+                     </graphic></Button>
+                  <Button mnemonicParsing="false" style="-fx-background-color: transparent;">
+                     <graphic>
+                        <FontAwesomeIconView fill="WHITE" glyphName="REFRESH" />
+                     </graphic>
+                     <HBox.margin>
+                        <Insets left="25.0" right="25.0" />
+                     </HBox.margin></Button>
+                  <Button mnemonicParsing="false" style="-fx-background-color: transparent;">
+                     <graphic>
+                        <FontAwesomeIconView fill="WHITE" glyphName="RANDOM" />
+                     </graphic></Button>
                </children>
-            </Pane>
+            </HBox>
+            <HBox>
+               <children>
+                  <Label fx:id="tiempoAvanzado" alignment="CENTER" text="0:00" textFill="WHITE">
+                     <HBox.margin>
+                        <Insets left="50.0" />
+                     </HBox.margin>
+                  </Label>
+                  <Label fx:id="etiquetaDuracionCancion" text="/0:00" textFill="WHITE">
+                     <HBox.margin>
+                        <Insets />
+                     </HBox.margin>
+                  </Label>
+               </children>
+            </HBox>
+            <ProgressBar fx:id="barra" prefHeight="22.0" prefWidth="500.0" progress="0.0" />
             <HBox alignment="CENTER" prefHeight="45.0" prefWidth="600.0" spacing="20.0">
                <children>
-                  <Button mnemonicParsing="false" onAction="#retroceder" text="backward" />
-                  <Button alignment="CENTER" mnemonicParsing="false" onAction="#reproducir" text="Play/pause" />
-                  <Button mnemonicParsing="false" onAction="#avanzar" text="forward" />
+                  <Button mnemonicParsing="false" onAction="#retroceder" style="-fx-background-color: transparent;">
+                     <graphic>
+                        <FontAwesomeIconView fill="WHITE" glyphName="BACKWARD" />
+                     </graphic></Button>
+                  <Button alignment="CENTER" mnemonicParsing="false" onAction="#reproducir" style="-fx-background-color: transparent;">
+                     <graphic>
+                        <FontAwesomeIconView fill="WHITE" glyphName="PLAY" />
+                     </graphic></Button>
+                  <Button mnemonicParsing="false" onAction="#pausar" style="-fx-background-color: transparent;">
+                     <graphic>
+                        <FontAwesomeIconView fill="WHITE" glyphName="PAUSE" />
+                     </graphic>
+                  </Button>
+                  <Button mnemonicParsing="false" onAction="#avanzar" style="-fx-background-color: transparent;">
+                     <graphic>
+                        <FontAwesomeIconView fill="WHITE" glyphName="FORWARD" />
+                     </graphic></Button>
                </children>
             </HBox>
          </children>
@@ -27,8 +72,8 @@
       <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" BorderPane.alignment="CENTER">
          <children>
             <ImageView fx:id="cover" fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" />
-            <Label fx:id="songname" alignment="CENTER" style="-fx-text-fill: #FFFFFF;" text="No se está reproduciendo" />
-            <Label fx:id="artist" style="-fx-text-fill: #FFFFFF;" />
+            <Label fx:id="nombreCancion" alignment="CENTER" style="-fx-text-fill: #FFFFFF;" text="No se está reproduciendo" />
+            <Label fx:id="artista" style="-fx-text-fill: #FFFFFF;" />
          </children>
       </VBox>
    </center>
@@ -36,7 +81,7 @@
       <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" spacing="20.0" BorderPane.alignment="CENTER">
          <children>
             <Button alignment="CENTER" mnemonicParsing="false" text="Song details" />
-            <Button mnemonicParsing="false" text="Button" />
+            <Button mnemonicParsing="false" text="Library" />
             <Button mnemonicParsing="false" text="Button" />
          </children></VBox>
    </left>
