@@ -33,10 +33,11 @@ import org.jaudiotagger.tag.TagException;
 import javax.imageio.ImageIO;
 
 import static com.example.proyectomp3.Main.carpetaMusica;
+import static com.example.proyectomp3.Main.listaCanciones;
 
 
-public class Controlador implements Initializable {
-    private static String[] canciones;
+public class Controlador {
+    private static String[] canciones = listaCanciones;
     @FXML
     private Label nombreCancion;
     @FXML
@@ -54,14 +55,12 @@ public class Controlador implements Initializable {
     @FXML
     private  Label etiquetaDuracionCancion;
     private Timeline timeline;
-    @FXML
+  /*  @FXML
     public Label tiempoAvanzado;
-    int segundos = 0;
-    int minutos = 0;
+    private  int segundos = 0;
+    private  int minutos = 0;*/
+    public  Reproducción reproducción = new Reproducción();
 
-    public Controlador() {
-
-    }
 
     @FXML
     private void reproducir() {
@@ -78,11 +77,16 @@ public class Controlador implements Initializable {
 
                        }
                         reproductor.play();
+                       /* try {
+                            Platform.runLater(() -> this.tiempoAvanzado.setText(sumarTiempo()));
+                            Thread.sleep(35);
+                        } catch (Exception ex) {
+                        }*/
+                        reproducción.start();
                         barraDuracion(cancion);
                         estaReproduciendo = true;
                     }
                 }
-                Main.reproducción.start();
     }
     @FXML
     public void pausar(){
@@ -96,15 +100,6 @@ public class Controlador implements Initializable {
         }*/
     }
 
-    public void recorrerMusica(String carpeta){
-        File carpetaMusica = new File(carpeta);
-            canciones = carpetaMusica.list();
-            if (canciones != null){
-                for (int i = 0; i < canciones.length; i++) {
-                    System.out.println(canciones[i]);
-                }
-            }
-    }
     private void bibliotecaVacia(){
             cancion = "";
             nombreCancion.setText("La biblioteca");
@@ -148,6 +143,7 @@ public class Controlador implements Initializable {
     }
     @FXML
     private void avanzar() {
+        reproducción.interrupt();
         numeroCancion++;
         if (numeroCancion == canciones.length) numeroCancion = 0;
         cancion = carpetaMusica+canciones[numeroCancion];
@@ -156,7 +152,7 @@ public class Controlador implements Initializable {
         reproductor = null;
         cancionReproducida = null;
         estaReproduciendo = false;
-        tiempoAvanzado.setText("0:00");
+        //tiempoAvanzado.setText("0:00");
         timeline.stop();
         barra.setProgress(0);
         reproducir();
@@ -171,7 +167,7 @@ public class Controlador implements Initializable {
         reproductor = null;
         cancionReproducida = null;
         estaReproduciendo = false;
-        tiempoAvanzado.setText("0:00");
+        //tiempoAvanzado.setText("0:00");
         timeline.stop();
         barra.setProgress(0);
         reproducir();
@@ -221,30 +217,5 @@ public class Controlador implements Initializable {
         }
         else tiempoTotal="/"+minutos+":"+segundos;
         return tiempoTotal;
-    }
-    public synchronized void sumarTiempo(){
-        String tiempo;
-        try {
-            if (segundos<10){
-                tiempo=minutos+":0"+segundos;
-            }
-            else {
-                tiempo=minutos+":"+segundos;
-            }
-            segundos++;
-            if (segundos==60){
-                minutos++;
-                segundos=0;
-            }
-            tiempoAvanzado.setText(tiempo);
-            Thread.sleep(1000);
-        } catch (NullPointerException | InterruptedException e) {
-            throw new RuntimeException(e);
-        }
-    }
-
-    @Override
-    public void initialize(URL location, ResourceBundle resources) {
-        Label tiempoAvanzado1 = this.tiempoAvanzado;
     }
 }
