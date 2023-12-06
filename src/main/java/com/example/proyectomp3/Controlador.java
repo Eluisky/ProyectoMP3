@@ -41,7 +41,7 @@ import javax.imageio.ImageIO;
 
 
 
-public class Controlador {
+public class Controlador implements Runnable {
     @FXML
     public  Label nombreCancion;
     @FXML
@@ -60,12 +60,15 @@ public class Controlador {
     public  Label etiquetaDuracionCancion;
     @FXML
     public Label tiempoAvanzado;
+    private  int segundos = 0;
+    private  int minutos = 0;
+
 
     /*  @FXML
       public Label tiempoAvanzado;
       private  int segundos = 0;
       private  int minutos = 0;*/
-    public Reproducción reproducción = new Reproducción(tiempoAvanzado);
+    public Reproducción reproducción = new Reproducción();
 
 
     @FXML
@@ -93,11 +96,11 @@ public class Controlador {
                     barra.setProgress(0.0);
                 }
                 reproductor.play();
-                       /* try {
-                            Platform.runLater(() -> this.tiempoAvanzado.setText(sumarTiempo()));
-                            Thread.sleep(35);
+                       try {
+                               Controlador c = new Controlador();
+                                new Thread(c).start();
                         } catch (Exception ex) {
-                        }*/
+                        }
                 //reproducción.start();
                 ControladorMaster.barraDuracion(ControladorMaster.cancion,barra,etiquetaDuracionCancion);
                 estaReproduciendo = true;
@@ -170,6 +173,27 @@ public class Controlador {
             reproducir();
         }
     }
+    public synchronized void sumarTiempo(){
+        String tiempo;
+        try {
+            if (segundos<10){
+                tiempo=minutos+":0"+segundos+"/";
+            }
+            else {
+                tiempo=minutos+":"+segundos+"/";
+            }
+            segundos++;
+            if (segundos==60){
+                minutos++;
+                segundos=0;
+            }
+            Thread.sleep(1000);
+            //tiempoAvanzado.setText(tiempo);
+        } catch (NullPointerException | InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+
+    }
 
 
 
@@ -208,5 +232,10 @@ public class Controlador {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    @Override
+    public void run() {
+        while (true) sumarTiempo();
     }
 }
