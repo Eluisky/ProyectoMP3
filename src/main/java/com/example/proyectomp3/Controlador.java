@@ -46,22 +46,22 @@ import static com.example.proyectomp3.Main.listaCanciones;;
 public class Controlador {
     private static String[] canciones = listaCanciones;
     @FXML
-    private Label nombreCancion;
+    public  Label nombreCancion;
     @FXML
-    private Label artista;
+    public  Label artista;
     @FXML
-    private ImageView cover;
+    public  ImageView cover;
     @FXML
     private ProgressBar barra;
     private static int numeroCancion = 0;
-    private static String cancion;
+    private  String cancion;
     private boolean estaReproduciendo = false;
     private Media cancionReproducida;
     private MediaPlayer reproductor;
     private boolean avanzar;
     private boolean retroceder;
     @FXML
-    private Label etiquetaDuracionCancion;
+    public  Label etiquetaDuracionCancion;
     @FXML
     public Label tiempoAvanzado;
 
@@ -179,7 +179,7 @@ public class Controlador {
     @FXML
     public void abrirVentanaDetalles() {
         try {
-
+            //ControladorVentanaCancion.atributosCancion();
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("VentanaCancion.fxml"));
             Stage stage = new Stage();
             Scene scene;

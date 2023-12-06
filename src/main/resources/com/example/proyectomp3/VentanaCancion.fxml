@@ -6,9 +6,9 @@
 
 <VBox alignment="TOP_CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: black;" xmlns="http://javafx.com/javafx/11.0.14-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.proyectomp3.ControladorVentanaCancion">
    <children>
-      <ImageView fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" />
-      <Label text="nombre cancion" textFill="WHITE" />
-      <Label text="artista" textFill="WHITE" />
-      <Label text="duración" textFill="WHITE" />
+      <ImageView fx:id="cover" fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" />
+      <Label fx:id="nombreCancion" text="nombre cancion" textFill="WHITE" />
+      <Label fx:id="artista" text="artista" textFill="WHITE" />
+      <Label fx:id="duracion" text="duración" textFill="WHITE" />
    </children>
 </VBox>
