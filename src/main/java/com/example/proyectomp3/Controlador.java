@@ -39,12 +39,9 @@ import org.jaudiotagger.tag.TagException;
 
 import javax.imageio.ImageIO;
 
-import static com.example.proyectomp3.Main.carpetaMusica;
-import static com.example.proyectomp3.Main.listaCanciones;;
 
 
 public class Controlador {
-    private static String[] canciones = listaCanciones;
     @FXML
     public  Label nombreCancion;
     @FXML
@@ -53,8 +50,7 @@ public class Controlador {
     public  ImageView cover;
     @FXML
     private ProgressBar barra;
-    private static int numeroCancion = 0;
-    private  String cancion;
+
     private boolean estaReproduciendo = false;
     private Media cancionReproducida;
     private MediaPlayer reproductor;
@@ -74,14 +70,15 @@ public class Controlador {
 
     @FXML
     private void reproducir() {
-        if (canciones.length == 0) bibliotecaVacia();
+        ControladorMaster.canciones = ControladorMaster.recorrerMusica();
+        if (ControladorMaster.canciones.length == 0) bibliotecaVacia();
         else {
-            cancion = carpetaMusica + canciones[numeroCancion];
+            ControladorMaster.cancion = ControladorMaster.carpetaMusica + ControladorMaster.canciones[ControladorMaster.numeroCancion];
             if (!estaReproduciendo) {
                 try {
-                    ControladorMaster.recorrerAtributosCancion(cancion,nombreCancion,artista,cover);
+                    ControladorMaster.recorrerAtributosCancion(ControladorMaster.cancion,nombreCancion,artista,cover);
                     if (cancionReproducida != null && reproductor != null) throw new CancionYaReproduciendose("");
-                    cancionReproducida = new Media(new File(cancion).toURI().toString());
+                    cancionReproducida = new Media(new File(ControladorMaster.cancion).toURI().toString());
                     reproductor = new MediaPlayer(cancionReproducida);
                 } catch (CancionYaReproduciendose e) {
                 }
@@ -102,7 +99,7 @@ public class Controlador {
                         } catch (Exception ex) {
                         }*/
                 //reproducción.start();
-                ControladorMaster.barraDuracion(cancion,barra,etiquetaDuracionCancion);
+                ControladorMaster.barraDuracion(ControladorMaster.cancion,barra,etiquetaDuracionCancion);
                 estaReproduciendo = true;
             }
         }
@@ -121,7 +118,7 @@ public class Controlador {
     }
 
     private void bibliotecaVacia() {
-        cancion = "";
+        ControladorMaster.cancion = "";
         nombreCancion.setText("La biblioteca");
         artista.setText("está vacía");
     }
@@ -131,9 +128,9 @@ public class Controlador {
     @FXML
     private void avanzar() {
         //reproducción.interrupt();
-        numeroCancion++;
-        if (numeroCancion == canciones.length) numeroCancion = 0;
-        cancion = carpetaMusica + canciones[numeroCancion];
+        ControladorMaster.numeroCancion++;
+        if (ControladorMaster.numeroCancion == ControladorMaster.canciones.length) ControladorMaster.numeroCancion = 0;
+        ControladorMaster.cancion = ControladorMaster.carpetaMusica + ControladorMaster.canciones[ControladorMaster.numeroCancion];
         retroceder = false;
         avanzar = true;
        try{
@@ -154,9 +151,9 @@ public class Controlador {
 
     @FXML
     private void retroceder() {
-        numeroCancion--;
-        if (numeroCancion < 0) numeroCancion = canciones.length - 1;
-        cancion = carpetaMusica + canciones[numeroCancion];
+        ControladorMaster.numeroCancion--;
+        if (ControladorMaster.numeroCancion < 0) ControladorMaster.numeroCancion = ControladorMaster.canciones.length - 1;
+        ControladorMaster.cancion = ControladorMaster.carpetaMusica + ControladorMaster.canciones[ControladorMaster.numeroCancion];
         retroceder = true;
         avanzar = false;
         try{
@@ -179,7 +176,6 @@ public class Controlador {
     @FXML
     public void abrirVentanaDetalles() {
         try {
-            //ControladorVentanaCancion.atributosCancion();
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("VentanaCancion.fxml"));
             Stage stage = new Stage();
             Scene scene;
@@ -187,6 +183,26 @@ public class Controlador {
             stage.setResizable(false);
             stage.getIcons().add(new Image("file:ico.png"));
             stage.setTitle("Detalles de la canción");
+            ControladorVentanaCancion controlador = fxmlLoader.getController();
+            controlador.atributosCancion();
+            stage.setScene(scene);
+            stage.show();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+    @FXML
+    public void abrirBiblioteca() {
+        try {
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("Biblioteca.fxml"));
+            Stage stage = new Stage();
+            Scene scene;
+            scene = new Scene(fxmlLoader.load(), 300, 500);
+            stage.setResizable(false);
+            stage.getIcons().add(new Image("file:ico.png"));
+            stage.setTitle("Biblioteca");
+            Biblioteca controlador = fxmlLoader.getController();
+            controlador.leerCanciones();
             stage.setScene(scene);
             stage.show();
         } catch (IOException e) {

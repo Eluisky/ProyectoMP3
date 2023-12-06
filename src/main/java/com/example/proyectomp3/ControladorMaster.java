@@ -2,6 +2,7 @@ package com.example.proyectomp3;
 
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
+import javafx.scene.control.Label;
 import javafx.scene.control.ProgressBar;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -16,7 +17,6 @@ import org.jaudiotagger.tag.Tag;
 import org.jaudiotagger.tag.TagException;
 
 import javax.imageio.ImageIO;
-import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
@@ -25,11 +25,14 @@ import java.io.IOException;
 
 public class ControladorMaster {
     public static Timeline timeline;
+    public static String carpetaMusica = "music\\";
+    public static String cancion;
+    public static int numeroCancion = 0;
+    public static String[] canciones;
 
-    public static String[] recorrerMusica(String carpeta){
-        String[] canciones;
-        File carpetaMusica = new File(carpeta);
-        canciones = carpetaMusica.list();
+    public static String[] recorrerMusica(){
+        File carpeta = new File(carpetaMusica);
+        canciones = carpeta.list();
         if (canciones != null){
             for (int i = 0; i < canciones.length; i++) {
                 System.out.println(canciones[i]);
@@ -37,19 +40,30 @@ public class ControladorMaster {
         }
         return canciones;
     }
+
     public static void recorrerAtributosCancion(String cancion,javafx.scene.control.Label nombreCancion, javafx.scene.control.Label artista, ImageView cover) {
-        File archivo = new File(cancion);
+        String nombre;
+        String artistaPrincipal;
         try {
+            File archivo = new File(cancion);
             AudioFile f = AudioFileIO.read(archivo);
             Tag tag = f.getTag();
-            String nombre = tag.getFirst(FieldKey.TITLE);
-            String artistaPrincipal = tag.getFirst(FieldKey.ARTIST);
+             nombre = tag.getFirst(FieldKey.TITLE);
+             artistaPrincipal = tag.getFirst(FieldKey.ARTIST);
             //comprobar titulo cancion
-            if (!nombre.equals("")) nombreCancion.setText(nombre);
-            else nombreCancion.setText("Sin título");
+            if (!nombre.equals("")) {
+                nombreCancion.setText(nombre);
+            }
+            else{
+                nombreCancion.setText("Sin título");
+            }
             //comprobar artista cancion
-            if (!artistaPrincipal.equals("")) artista.setText(artistaPrincipal);
-            else artista.setText("Artista desconocido");
+            if (!artistaPrincipal.equals("")){
+                artista.setText(artistaPrincipal);
+            }
+            else{
+                artista.setText("Artista desconocido");
+            }
             //comprobar cover
             if (tag.getFirst(FieldKey.COVER_ART).equals("")) {
                 BufferedImage bImage = ImageIO.read(new File("sample.png"));
@@ -68,7 +82,7 @@ public class ControladorMaster {
                 cover.setFitWidth(200);
             }
 
-        } catch (IOException | CannotReadException | TagException | ReadOnlyFileException |
+        } catch (IOException | CannotReadException | TagException | ReadOnlyFileException | NullPointerException |
                  InvalidAudioFrameException e) {
         }
 
@@ -113,8 +127,10 @@ public class ControladorMaster {
             }
         }
         if (segundos < 10) {
-            tiempoTotal = "/" + minutos + ":0" + segundos;
-        } else tiempoTotal = "/" + minutos + ":" + segundos;
+            tiempoTotal = minutos + ":0" + segundos;
+        } else {
+            tiempoTotal = minutos + ":" + segundos;
+        }
         return tiempoTotal;
     }
 
