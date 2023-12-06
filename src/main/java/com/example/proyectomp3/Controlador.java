@@ -89,6 +89,12 @@ public class Controlador {
                     if(avanzar) avanzar();
                     else if (retroceder) retroceder();
                 }
+                finally {
+                    if (ControladorMaster.timeline != null) {
+                        ControladorMaster.timeline.stop();
+                    }
+                    barra.setProgress(0.0);
+                }
                 reproductor.play();
                        /* try {
                             Platform.runLater(() -> this.tiempoAvanzado.setText(sumarTiempo()));
@@ -130,14 +136,13 @@ public class Controlador {
         cancion = carpetaMusica + canciones[numeroCancion];
         retroceder = false;
         avanzar = true;
-        ControladorMaster.timeline.stop();
-        barra.setProgress(0);
        try{
            reproductor.stop();
            //Vaciamos el reproductor con null
            reproductor = null;
            cancionReproducida = null;
            estaReproduciendo = false;
+
            //tiempoAvanzado.setText("0:00");
            reproducir();
        }
@@ -154,14 +159,13 @@ public class Controlador {
         cancion = carpetaMusica + canciones[numeroCancion];
         retroceder = true;
         avanzar = false;
-        ControladorMaster.timeline.stop();
-        barra.setProgress(0);
         try{
             reproductor.stop();
             //Vaciamos el reproductor con null
             reproductor = null;
             cancionReproducida = null;
             estaReproduciendo = false;
+
             //tiempoAvanzado.setText("0:00");
             reproducir();
         }
