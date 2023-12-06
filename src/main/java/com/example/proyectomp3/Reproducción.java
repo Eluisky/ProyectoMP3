@@ -6,10 +6,13 @@ import javafx.scene.control.Label;
 public class Reproducción extends Thread{
     private  int segundos = 0;
     private  int minutos = 0;
-    @FXML
-    public Label tiempoAvanzado;
+    private Label tiempoAvanzando;
 
-    public  synchronized void sumarTiempo(){
+    public Reproducción(Label tiempoAvanzando) {
+        this.tiempoAvanzando = tiempoAvanzando;
+    }
+
+    public synchronized void sumarTiempo(javafx.scene.control.Label tiempoAvanzado){
         String tiempo;
         try {
             if (segundos<10){
@@ -23,8 +26,8 @@ public class Reproducción extends Thread{
                 minutos++;
                 segundos=0;
             }
-            tiempoAvanzado.setText(tiempo);
             Thread.sleep(1000);
+            tiempoAvanzado.setText(tiempo);
         } catch (NullPointerException | InterruptedException e) {
             throw new RuntimeException(e);
         }
@@ -32,6 +35,6 @@ public class Reproducción extends Thread{
 
     @Override
     public void run() {
-        while(true) sumarTiempo();
+        while(true) sumarTiempo(tiempoAvanzando);
     }
 }
