@@ -10,5 +10,8 @@
       <Label fx:id="nombreCancion" text="No hay ninguna" textFill="WHITE" />
       <Label fx:id="artista" text="canción reproduciendose" textFill="WHITE" />
       <Label fx:id="duracion" textFill="WHITE" />
+      <Label fx:id="album" textFill="WHITE" />
+      <Label fx:id="genero" textFill="WHITE" />
+      <Label fx:id="track" textFill="WHITE" />
    </children>
 </VBox>

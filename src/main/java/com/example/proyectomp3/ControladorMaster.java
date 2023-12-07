@@ -33,11 +33,6 @@ public class ControladorMaster {
     public static String[] recorrerMusica(){
         File carpeta = new File(carpetaMusica);
         canciones = carpeta.list();
-        if (canciones != null){
-            for (int i = 0; i < canciones.length; i++) {
-                System.out.println(canciones[i]);
-            }
-        }
         return canciones;
     }
 
@@ -84,6 +79,43 @@ public class ControladorMaster {
 
         } catch (IOException | CannotReadException | TagException | ReadOnlyFileException | NullPointerException |
                  InvalidAudioFrameException e) {
+        }
+
+    }
+    public static void masAtributosCancion(String cancion,javafx.scene.control.Label album, javafx.scene.control.Label genero , javafx.scene.control.Label track){
+        String nombreAlbum;
+        String nombreGenero;
+        String numeroTrack;
+        try {
+            File archivo = new File(cancion);
+            AudioFile f = AudioFileIO.read(archivo);
+            Tag tag = f.getTag();
+            nombreAlbum = tag.getFirst(FieldKey.ALBUM);
+            nombreGenero = tag.getFirst(FieldKey.GENRE);
+            numeroTrack = tag.getFirst(FieldKey.TRACK);
+            //comprobar álbum cancion
+            if (!nombreAlbum.equals("")) {
+                album.setText(nombreAlbum);
+            }
+            else{
+                album.setText("Album desconocido");
+            }
+            //comprobar género cancion
+            if (!nombreGenero.equals("")){
+                genero.setText(nombreGenero);
+            }
+            else{
+                genero.setText("Género desconocido");
+            }
+            //comprobar numero de la cancion
+            if (!numeroTrack.equals("")){
+                track.setText(numeroTrack);
+            }
+            else{
+                track.setText("Número de pista desconocido");
+            }
+        } catch (IOException | CannotReadException | TagException | ReadOnlyFileException | NullPointerException |
+                       InvalidAudioFrameException e) {
         }
 
     }

@@ -12,20 +12,20 @@
          <children>
             <HBox alignment="CENTER" prefHeight="17.0" prefWidth="600.0">
                <children>
-                  <Button mnemonicParsing="false" style="-fx-background-color: transparent;">
+                  <Button fx:id="bucleUnaVez" mnemonicParsing="false" onAction="#bucleUnaVez" style="-fx-background-color: transparent;">
                      <graphic>
-                        <FontAwesomeIconView fill="WHITE" glyphName="ROTATE_LEFT" />
+                        <FontAwesomeIconView fx:id="iconoBucleUno" fill="WHITE" glyphName="ROTATE_LEFT" />
                      </graphic></Button>
-                  <Button mnemonicParsing="false" style="-fx-background-color: transparent;">
+                  <Button fx:id="bucleInfinito" mnemonicParsing="false" onAction="#bucleInfinito" style="-fx-background-color: transparent;">
                      <graphic>
-                        <FontAwesomeIconView fill="WHITE" glyphName="REFRESH" />
+                        <FontAwesomeIconView fx:id="iconoBucleInfinito" fill="WHITE" glyphName="REFRESH" />
                      </graphic>
                      <HBox.margin>
                         <Insets left="25.0" right="25.0" />
                      </HBox.margin></Button>
-                  <Button mnemonicParsing="false" style="-fx-background-color: transparent;">
+                  <Button fx:id="aleatorio" mnemonicParsing="false" onAction="#aleatorio" style="-fx-background-color: transparent;">
                      <graphic>
-                        <FontAwesomeIconView fill="WHITE" glyphName="RANDOM" />
+                        <FontAwesomeIconView fx:id="iconoAleatorio" fill="WHITE" glyphName="RANDOM" />
                      </graphic></Button>
                </children>
             </HBox>

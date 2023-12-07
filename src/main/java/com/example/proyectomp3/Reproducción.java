@@ -1,11 +1,17 @@
 package com.example.proyectomp3;
 
+import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 
 public class Reproducción extends Thread{
     private  int segundos = 0;
     private  int minutos = 0;
+    public Label tiempoAvanzado;
+
+    public Reproducción(Label tiempoAvanzado) {
+        this.tiempoAvanzado = tiempoAvanzado;
+    }
 
 
     public synchronized String sumarTiempo(){
@@ -22,8 +28,8 @@ public class Reproducción extends Thread{
                 minutos++;
                 segundos=0;
             }
-            Thread.sleep(1000);
-        } catch (NullPointerException | InterruptedException e) {
+            tiempoAvanzado.setText(tiempo);
+        } catch (NullPointerException e) {
             throw new RuntimeException(e);
         }
         return tiempo;
@@ -31,6 +37,15 @@ public class Reproducción extends Thread{
 
     @Override
     public void run() {
-        while(true) sumarTiempo();
+        tiempoAvanzado.setText("0:00/");
+        Platform.runLater(() -> {
+            while(true) sumarTiempo();
+        });
+        try {
+            Thread.sleep(1000);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+
     }
 }

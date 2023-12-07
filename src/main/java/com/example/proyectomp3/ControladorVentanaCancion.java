@@ -23,12 +23,22 @@ public class ControladorVentanaCancion {
     private  Label artista;
     @FXML
     private  Label duracion;
+    @FXML
+    private  Label album;
+    @FXML
+    private  Label genero;
+    @FXML
+    private  Label track;
 
 
     public void atributosCancion(){
         ControladorMaster.recorrerAtributosCancion(ControladorMaster.cancion,nombreCancion,artista,cover);
         nombreCancion.setText("Nombre: "+nombreCancion.getText());
         artista.setText("Artista: "+artista.getText());
+        ControladorMaster.masAtributosCancion(ControladorMaster.cancion,album,genero,track);
+        album.setText("Album: "+album.getText());
+        genero.setText("Género: "+genero.getText());
+        track.setText("Número de pista: "+track.getText());
         try{
             File archivo = new File(ControladorMaster.cancion);
             AudioFile audioFile = AudioFileIO.read(archivo);
