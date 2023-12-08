@@ -36,9 +36,12 @@ public class ControladorVentanaCancion {
         nombreCancion.setText("Nombre: "+nombreCancion.getText());
         artista.setText("Artista: "+artista.getText());
         ControladorMaster.masAtributosCancion(ControladorMaster.cancion,album,genero,track);
-        album.setText("Album: "+album.getText());
-        genero.setText("Género: "+genero.getText());
-        track.setText("Número de pista: "+track.getText());
+        if (album.getText().equals(""));
+        else album.setText("Album: "+album.getText());
+        if (genero.getText().equals(""));
+        else genero.setText("Género: "+genero.getText());
+        if (track.getText().equals(""));
+        else track.setText("Número de pista: "+track.getText());
         try{
             File archivo = new File(ControladorMaster.cancion);
             AudioFile audioFile = AudioFileIO.read(archivo);

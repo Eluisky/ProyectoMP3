@@ -4,7 +4,6 @@ package com.example.proyectomp3;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import java.io.File;
 import java.io.IOException;
@@ -16,12 +15,11 @@ import javafx.scene.media.Media;
 import javafx.scene.media.MediaException;
 import javafx.scene.media.MediaPlayer;
 import javafx.scene.paint.Color;
-import javafx.scene.paint.Paint;
 import javafx.stage.Stage;
 
 
 
-public class Controlador {
+public class ControladorVistaPrincipal {
     @FXML
     public Label nombreCancion;
     @FXML
@@ -48,12 +46,18 @@ public class Controlador {
     private de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView iconoBucleInfinito;
     @FXML
     private de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView iconoAleatorio;
+    @FXML
+    private de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView iconoPlay;
+    @FXML
+    private de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView iconoPausa;
     private boolean esAleatorio = false;
     private boolean comprobarBucleUnaVez = false;
     private boolean comprobarBucleInfinito = false;
 
     @FXML
     private void reproducir() {
+        iconoPlay.setFill(Color.GREEN);
+        iconoPausa.setFill(Color.WHITE);
         if (ControladorMaster.canciones.length == 0) bibliotecaVacia();
         else {
             ControladorMaster.cancion = ControladorMaster.carpetaMusica + ControladorMaster.canciones[ControladorMaster.numeroCancion];
@@ -86,6 +90,8 @@ public class Controlador {
 
     @FXML
     public void pausar() {
+        iconoPlay.setFill(Color.WHITE);
+        iconoPausa.setFill(Color.GREEN);
         reproductor.pause();
         ControladorMaster.timeline.pause();
         estaReproduciendo = false;
@@ -182,7 +188,11 @@ public class Controlador {
             ControladorMaster.numeroCancion = noRepetido;
         }
         //comprobar si está en bucle
-        else if (comprobarBucleUnaVez) comprobarBucleUnaVez = false; //No sumamos uno a la cancion para que vuelva a sonar la misma
+        else if (comprobarBucleUnaVez) {
+            //No sumamos uno a la cancion para que vuelva a sonar la misma
+            comprobarBucleUnaVez = false;
+            iconoBucleUno.setFill(Color.WHITE);
+        }
         else if (comprobarBucleInfinito) ;//No sumamos uno a la cancion para que vuelva a sonar la misma y no cambiamos la variable
             //para que repita siempre la misma cancion
         else ControladorMaster.numeroCancion--;
@@ -204,7 +214,7 @@ public class Controlador {
         }
     }
 
-    public synchronized void sumarTiempo() {
+   /* public synchronized void sumarTiempo() {
         String tiempo;
         try {
             if (segundos < 10) {
@@ -223,7 +233,7 @@ public class Controlador {
             throw new RuntimeException(e);
         }
 
-    }
+    }*/
 
 
     @FXML
@@ -245,23 +255,19 @@ public class Controlador {
         }
     }
 
-    @FXML
+    /*@FXML
     public void abrirBiblioteca() {
-        try {
-            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("Biblioteca.fxml"));
-            Stage stage = new Stage();
-            Scene scene;
-            scene = new Scene(fxmlLoader.load(), 300, 500);
-            stage.setResizable(false);
-            stage.getIcons().add(new Image("file:ico.png"));
-            stage.setTitle("Biblioteca");
-            Biblioteca controlador = fxmlLoader.getController();
-            controlador.leerCanciones();
-            stage.setScene(scene);
-            stage.show();
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-    }
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("Biblioteca.fxml"));
+        Stage stage = new Stage();
+        Scene scene;
+        Biblioteca controlador = fxmlLoader.getController();
+        HBox h = controlador.leerCanciones();
+        scene = new Scene(h, 300, 500);
+        stage.setResizable(false);
+        stage.getIcons().add(new Image("file:ico.png"));
+        stage.setTitle("Biblioteca");
+        stage.setScene(scene);
+        stage.show();
+    }*/
 
 }
