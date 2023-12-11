@@ -54,6 +54,7 @@ public class ControladorVistaPrincipal {
     private boolean comprobarBucleUnaVez = false;
     private boolean comprobarBucleInfinito = false;
 
+
     @FXML
     private void reproducir() {
         iconoPlay.setFill(Color.GREEN);
@@ -75,7 +76,6 @@ public class ControladorVistaPrincipal {
                     if (ControladorMaster.timeline != null) {
                         ControladorMaster.timeline.stop();
                     }
-                    barra.setProgress(0.0);
                 }
                 reproductor.play();
                 ControladorMaster.barraDuracion(ControladorMaster.cancion, barra, etiquetaDuracionCancion);
@@ -165,6 +165,7 @@ public class ControladorVistaPrincipal {
         ControladorMaster.cancion = ControladorMaster.carpetaMusica + ControladorMaster.canciones[ControladorMaster.numeroCancion];
         retroceder = false;
         avanzar = true;
+        barra.setProgress(0.0);
         try {
             reproductor.stop();
             //Vaciamos el reproductor con null
@@ -180,7 +181,7 @@ public class ControladorVistaPrincipal {
 
     @FXML
     private void retroceder() {
-        if (esAleatorio){
+        if (esAleatorio && !comprobarBucleUnaVez){
             int noRepetido = ControladorMaster.numeroCancion = (int) (Math.random()*ControladorMaster.canciones.length);
             while (ControladorMaster.numeroCancion == noRepetido){
                noRepetido = (int) (Math.random()*ControladorMaster.canciones.length);
@@ -202,6 +203,7 @@ public class ControladorVistaPrincipal {
         ControladorMaster.cancion = ControladorMaster.carpetaMusica + ControladorMaster.canciones[ControladorMaster.numeroCancion];
         retroceder = true;
         avanzar = false;
+        barra.setProgress(0.0);
         try {
             reproductor.stop();
             //Vaciamos el reproductor con null
